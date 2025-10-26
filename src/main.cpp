@@ -265,6 +265,8 @@ LRESULT __stdcall keyboard_hook_proc(int nCode, WPARAM wParam, LPARAM lParam)
                         key_text = "WIN";
                     } else if (vkCode == VK_SPACE) {
                         key_text = " ";
+                    } else if (vkCode >= VK_F1 && vkCode <= VK_F12) {
+                        key_text = "F" + std::to_string(vkCode - VK_F1 + 1);
                     } else {
                         char key_char = MapVirtualKeyA(vkCode, MAPVK_VK_TO_CHAR);
                         if (key_char != 0) {
