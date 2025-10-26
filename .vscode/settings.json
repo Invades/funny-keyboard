@@ -1,0 +1,32 @@
+{
+    "cmake.generator": "Ninja Multi-Config",
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.useCMakePresets": "always",
+    "cmake.options.statusBarVisibility": "hidden",
+    "cmake.options.advanced": {
+        "build": {
+            "inheritDefault": "visible"
+        },
+        "launch": {
+            "statusBarVisibility": "visible"
+        },
+        "debug": {
+            "statusBarVisibility": "visible"
+        },
+        "buildPreset": {
+            "statusBarVisibility": "visible"
+        }
+    },
+    "files.associations": {
+        "string": "cpp",
+        "xhash": "cpp",
+        "cstring": "cpp",
+        "unordered_map": "cpp",
+        "cstdio": "cpp",
+        "cmath": "cpp",
+        "cstdlib": "cpp",
+        "exception": "cpp",
+        "*.rh": "cpp",
+        "xstring": "cpp"
+    },
+}

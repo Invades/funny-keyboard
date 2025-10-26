@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      
+      - name: Setup CMake
+        uses: lukka/get-cmake@latest
+      
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+      
+      - name: Configure CMake
+        run: cmake --preset default
+      
+      - name: Build Release
+        run: cmake --build build --config Release
+      
+      - name: Build Debug
+        run: cmake --build build --config Debug
+      
+      - name: Create Release directory structure
+        run: |
+          New-Item -ItemType Directory -Force -Path release-package
+          New-Item -ItemType Directory -Force -Path release-package/assets
+          Copy-Item build/Release/funny-keyboard.exe release-package/
+          if (Test-Path assets) {
+            Copy-Item -Recurse assets/* release-package/assets/
+          }
+          if (Test-Path build/Release/config.json) {
+            Copy-Item build/Release/config.json release-package/
+          }
+      
+      - name: Create Debug directory structure
+        run: |
+          New-Item -ItemType Directory -Force -Path debug-package
+          New-Item -ItemType Directory -Force -Path debug-package/assets
+          Copy-Item build/Debug/funny-keyboard.exe debug-package/
+          Copy-Item build/Debug/funny-keyboard.pdb debug-package/
+          if (Test-Path assets) {
+            Copy-Item -Recurse assets/* debug-package/assets/
+          }
+          if (Test-Path build/Debug/config.json) {
+            Copy-Item build/Debug/config.json debug-package/
+          }
+      
+      - name: Create Release zip
+        run: Compress-Archive -Path release-package/* -DestinationPath funny-keyboard-release.zip
+      
+      - name: Create Debug zip
+        run: Compress-Archive -Path debug-package/* -DestinationPath funny-keyboard-debug.zip
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: |
+            funny-keyboard-release.zip
+            funny-keyboard-debug.zip
