@@ -19,8 +19,10 @@ jobs:
       - name: Setup CMake
         uses: lukka/get-cmake@latest
       
-      - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v1
+      - name: Setup Clang
+        uses: KyleMayes/install-llvm-action@v2
+        with:
+          version: "18"
       
       - name: Configure CMake
         run: cmake --preset default
