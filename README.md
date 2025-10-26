@@ -39,8 +39,8 @@ Manual instructions:
 mkdir build
 cmake -S . -B build
 cmake --build build --config Debug
+# (Debug can be replaced with "Release" depending on the build target)
 ```
-(Debug can be replaced with "Release" depending on the build target)
 CPM will download all the libraries on the first configure (second command).
 ### Notes
 - Exit with `ctrl+alt+f`
