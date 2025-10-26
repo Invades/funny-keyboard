@@ -20,12 +20,14 @@ jobs:
         uses: lukka/get-cmake@latest
       
       - name: Setup Clang
-        uses: KyleMayes/install-llvm-action@v2
-        with:
-          version: "21"
+        run: |
+          choco install llvm --version=21.1.0 -y
+          $env:PATH = "C:\Program Files\LLVM\bin;$env:PATH"
+          echo "C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          clang --version
       
       - name: Configure CMake
-        run: cmake --preset default
+        run: cmake --preset default -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
       
       - name: Build Release
         run: cmake --build build --config Release
