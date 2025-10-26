@@ -76,6 +76,16 @@ jobs:
           name: ${{ github.ref_name }}
           draft: false
           prerelease: false
+          body: |
+            | Release  | Debug    |
+            |----------|----------|
+            | [Download](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/funny-keyboard.zip) | [Download](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/funny-keyboard-debug.zip) |
+
+            Default assets are included.
+            Download and extract the appropriate zip file
+            Run `funny-keyboard.exe`
+            Press `Ctrl+Alt+F` to exit
+          generate_release_notes: true
           files: |
             funny-keyboard.zip
             funny-keyboard-debug.zip
