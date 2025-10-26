@@ -1,6 +1,5 @@
 # funny keyboard
 A simple reimagination of the [Tamam Keyboard](https://play.google.com/store/apps/details?id=com.ziipin.softkeyboard.saudi) app for android, now on windows.
-Requires [Visual C++ redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version) to run.
 ### Features
 ---
 - [x] GLFW overlay powered by raylib
@@ -27,13 +26,13 @@ The program defaults to a simple circle behind the text, affected by the "colori
 - `fire.webp`
 - `fire2.webp`
 - `fire3.webp`
+Setting colorize to `false` disables the effect applied on top of images.
 ### Build
 ---
 VSCode is recommended as it will do everything for you.
 1. Ensure you have clang and Ninja installed and in PATH.
 2. Ensure Windows SDK is installed
----
-Manual instructions:
+#### Manual instructions:
 1. Create a build directory and run CMake with Ninja generator.
 ```powershell
 mkdir build
