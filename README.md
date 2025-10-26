@@ -1,5 +1,4 @@
 # funny keyboard
----
 A simple reimagination of the [Tamam Keyboard](https://play.google.com/store/apps/details?id=com.ziipin.softkeyboard.saudi) app for android, now on windows.
 Requires [Visual C++ redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#latest-supported-redistributable-version) to run.
 ### Features
