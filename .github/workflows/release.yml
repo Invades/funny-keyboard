@@ -22,7 +22,7 @@ jobs:
       - name: Setup Clang
         uses: KyleMayes/install-llvm-action@v2
         with:
-          version: "18"
+          version: "21"
       
       - name: Configure CMake
         run: cmake --preset default
