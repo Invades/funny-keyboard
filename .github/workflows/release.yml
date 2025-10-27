@@ -16,21 +16,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Restore CPM Cache
+        uses: actions/cache@v4
         with:
-          submodules: recursive
+          path: ${{ github.workspace }}/build/_deps
+          key: cpm-cache-${{ runner.os }}-${{ hashFiles('CMakeLists.txt', '**/CPM.cmake')}}
+          restore-keys: cpm-cache-${{ runner.os }}-
       
-      - name: Setup CMake
-        uses: lukka/get-cmake@latest
-      
-      - name: Setup Clang
-        run: |
-          choco install llvm --version=21.1.0 -y
-          $env:PATH = "C:\Program Files\LLVM\bin;$env:PATH"
-          echo "C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          clang --version
-      
+      - name: Cache CMake Build
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/build
+          key: cmake-build-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('**/*.cpp', '**/*.h') }}
+          restore-keys: cmake-build-${{ runner.os }}-
       - name: Configure CMake
-        run: cmake --preset default -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+        run: cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_CONFIGURATION_TYPES="Debug;Release"
       
       - name: Build Release
         run: cmake --build build --config Release
@@ -46,9 +47,6 @@ jobs:
           if (Test-Path assets) {
             Copy-Item -Recurse assets/* release-package/assets/
           }
-          if (Test-Path build/Release/config.json) {
-            Copy-Item build/Release/config.json release-package/
-          }
       
       - name: Create Debug directory structure
         run: |
@@ -58,9 +56,6 @@ jobs:
           Copy-Item build/Debug/funny-keyboard.pdb debug-package/
           if (Test-Path assets) {
             Copy-Item -Recurse assets/* debug-package/assets/
-          }
-          if (Test-Path build/Debug/config.json) {
-            Copy-Item build/Debug/config.json debug-package/
           }
       
       - name: Create Release zip
