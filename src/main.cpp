@@ -187,6 +187,26 @@ std::string vk_code_to_key_name(int vk_code)
         case VK_LSHIFT: case VK_RSHIFT: return "shift";
         case VK_LCONTROL: case VK_RCONTROL: return "control";
         case VK_LWIN: case VK_RWIN: return "win";
+        case VK_DELETE: return "delete";
+        case VK_INSERT: return "insert";
+        case VK_HOME: return "home";
+        case VK_END: return "end";
+        case VK_PRIOR: return "pageup";
+        case VK_NEXT: return "pagedown";
+        case VK_SNAPSHOT: return "printscreen";
+        case VK_SCROLL: return "scrolllock";
+        case VK_PAUSE: return "pause";
+        case VK_NUMLOCK: return "numlock";
+        case VK_CAPITAL: return "capslock";
+        case VK_TAB: return "tab";
+        case VK_ESCAPE: return "escape";
+        case VK_VOLUME_MUTE: return "volmute";
+        case VK_VOLUME_DOWN: return "voldown";
+        case VK_VOLUME_UP: return "volup";
+        case VK_MEDIA_NEXT_TRACK: return "nexttrack";
+        case VK_MEDIA_PREV_TRACK: return "prevtrack";
+        case VK_MEDIA_STOP: return "stop";
+        case VK_MEDIA_PLAY_PAUSE: return "playpause";
 
         default: {
             char key_char = MapVirtualKeyA(vk_code, MAPVK_VK_TO_CHAR);
@@ -263,8 +283,48 @@ LRESULT __stdcall keyboard_hook_proc(int nCode, WPARAM wParam, LPARAM lParam)
                         key_text = "SHFT";
                     } else if (vkCode == VK_LWIN || vkCode == VK_RWIN) {
                         key_text = "WIN";
+                    } else if (vkCode == VK_DELETE) {
+                        key_text = "DEL";
+                    } else if (vkCode == VK_INSERT) {
+                        key_text = "INS";
+                    } else if (vkCode == VK_HOME) {
+                        key_text = "HOME";
+                    } else if (vkCode == VK_END) {
+                        key_text = "END";
+                    } else if (vkCode == VK_PRIOR) {
+                        key_text = "PGUP";
+                    } else if (vkCode == VK_NEXT) {
+                        key_text = "PGDN";
+                    } else if (vkCode == VK_SNAPSHOT) {
+                        key_text = "PRSTC";
+                    } else if (vkCode == VK_SCROLL) {
+                        key_text = "SCRL";
+                    } else if (vkCode == VK_PAUSE) {
+                        key_text = "PAUSE";
+                    } else if (vkCode == VK_NUMLOCK) {
+                        key_text = "NUM";
+                    } else if (vkCode == VK_CAPITAL) {
+                        key_text = "CAPS";
+                    } else if (vkCode == VK_TAB) {
+                        key_text = "TAB";
+                    } else if (vkCode == VK_ESCAPE) {
+                        key_text = "ESC";
                     } else if (vkCode == VK_SPACE) {
                         key_text = " ";
+                    } else if (vkCode == VK_VOLUME_MUTE) {
+                        key_text = "MUTE";
+                    } else if (vkCode == VK_VOLUME_DOWN) {
+                        key_text = "VOL-";
+                    } else if (vkCode == VK_VOLUME_UP) {
+                        key_text = "VOL+";
+                    } else if (vkCode == VK_MEDIA_NEXT_TRACK) {
+                        key_text = "NEXT";
+                    } else if (vkCode == VK_MEDIA_PREV_TRACK) {
+                        key_text = "PREV";
+                    } else if (vkCode == VK_MEDIA_STOP) {
+                        key_text = "STOP";
+                    } else if (vkCode == VK_MEDIA_PLAY_PAUSE) {
+                        key_text = "PLAY";
                     } else if (vkCode >= VK_F1 && vkCode <= VK_F12) {
                         key_text = "F" + std::to_string(vkCode - VK_F1 + 1);
                     } else {
