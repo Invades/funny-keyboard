@@ -6,6 +6,8 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 include(cmake/CPM.cmake)
 
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Force static linking for dependencies" FORCE)
@@ -79,9 +81,7 @@ target_compile_definitions(funny-keyboard PRIVATE
   $<$<CONFIG:Release>:RELEASE>
 )
  
-if(MSVC)
-  target_compile_options(funny-keyboard PRIVATE /MP)
-endif()
+target_compile_options(funny-keyboard PRIVATE)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
