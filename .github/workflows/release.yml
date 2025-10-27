@@ -17,22 +17,33 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Install LLVM and Clang
+        uses: KyleMayes/install-llvm-action@latest
+        with:
+          version: "18.1"
+          cached: true
+      
+      - name: Setup CMake and Ninja
+        uses: lukka/get-cmake@latest
+      
       - name: Restore CPM Cache
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/build/_deps
-          key: cpm-cache-${{ runner.os }}-${{ hashFiles('CMakeLists.txt', '**/CPM.cmake') }}
-          restore-keys: cpm-cache-${{ runner.os }}-
+          key: cpm-cache-clang-${{ runner.os }}-${{ hashFiles('CMakeLists.txt', 'cmake/CPM.cmake')}}
+          restore-keys: cpm-cache-clang-${{ runner.os }}-
       
       - name: Cache CMake Build
         uses: actions/cache@v4
         with:
-          path: ${{ github.workspace }}/build
-          key: cmake-build-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('**/*.cpp', '**/*.h') }}
-          restore-keys: cmake-build-${{ runner.os }}-
-            
+          path: |
+            ${{ github.workspace }}/build
+            !${{ github.workspace }}/build/_deps
+          key: cmake-build-clang-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('src/**/*.cpp', 'src/**/*.h') }}
+          restore-keys: cmake-build-clang-${{ runner.os }}-
+      
       - name: Configure CMake
-        run: cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_CONFIGURATION_TYPES="Debug;Release"
+        run: cmake --preset default
       
       - name: Build Release
         run: cmake --build build --config Release
